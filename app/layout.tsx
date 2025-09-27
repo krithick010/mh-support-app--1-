@@ -23,7 +23,7 @@ const plexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Flourish",
+  title: "Zenly",
   description: "Warm, simple mental health support system for students",
   generator: "v0.app",
 }

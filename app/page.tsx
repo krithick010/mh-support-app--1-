@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <section className="min-h-[70vh] flex flex-col items-center justify-center text-center gap-6">
       <div className="space-y-2 max-w-xl">
-  <h1 className="font-sans text-3xl text-accent text-balance">Flourish — You belong here.</h1>
+  <h1 className="font-sans text-3xl text-accent text-balance">Zenly — You belong here.</h1>
         <p className="text-sm text-muted-foreground">
           Warm, simple support for your day. Continue in a way that feels comfortable.
         </p>

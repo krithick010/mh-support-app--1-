@@ -30,8 +30,8 @@ export function CounsellorSidebar() {
     <aside className="w-64 flex-shrink-0 border-r bg-background">
       <div className="flex h-full flex-col">
         <div className="p-4">
-          <h2 className="text-xl font-bold">SKCT Wellness</h2>
-          <p className="text-sm text-muted-foreground">Counselor Portal</p>
+          <h2 className="text-xl font-bold">Counsellor Portal</h2>
+          <p className="text-sm text-muted-foreground">Manage sessions, messages, and analytics</p>
         </div>
         <nav className="flex-1 space-y-1 p-2">
           {links.map((link) => (

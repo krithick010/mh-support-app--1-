@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
 import { CheckInForm } from "../../components/check-in-form"
 import Link from "next/link"
 
@@ -18,6 +19,7 @@ function moodStreakSymbol(tier: 1 | 2 | 3) {
 }
 
 export default function DashboardPage() {
+  const router = useRouter()
   const [role, setRole] = useState<Role>("student")
   const [name, setName] = useState("")
   const [history, setHistory] = useState<CheckIn[]>([])
@@ -25,6 +27,10 @@ export default function DashboardPage() {
   useEffect(() => {
     const r = (localStorage.getItem("role") as Role) || "student"
     setRole(r)
+    if (r === "counsellor") {
+      router.replace("/counsellor")
+      return
+    }
     setName(localStorage.getItem("name") || "")
     const saved = localStorage.getItem("checkins")
     const h = saved ? JSON.parse(saved) : []

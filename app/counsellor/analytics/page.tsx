@@ -75,7 +75,7 @@ export default function AnalyticsPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold">SKCT Wellness Analytics</h1>
+          <h1 className="text-3xl font-bold">Counsellor Analytics</h1>
           <p className="text-muted-foreground">
             Track student wellness trends and intervention effectiveness
           </p>

@@ -55,19 +55,19 @@ export function Nav() {
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold text-primary">
-            <span className="hidden sm:block">Flourish</span>
-            <span className="sm:hidden">CW</span>
+            <span className="hidden sm:block">Zenly</span>
+            <span className="sm:hidden">Z</span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
-            {!isAuthed || !userRole ? (
+      {!isAuthed || !userRole ? (
               // Public navigation - show when not authenticated or no role
               <>
                 <NavLink href="/" label="Home" icon={Home} />
                 <NavLink href="/appointments" label="Counsellors" icon={Calendar} />
-                <NavLink href="/forum" label="Community" icon={MessageSquare} />
-                <NavLink href="/volunteer" label="Volunteers" icon={Users} />
+        <NavLink href="/forum" label="Community" icon={MessageSquare} />
+        {/* Hide Volunteers for guest mode (no signup) */}
                 <NavLink href="/wellness-hub" label="Wellness Hub" />
               </>
             ) : userRole === 'student' ? (
@@ -82,7 +82,6 @@ export function Nav() {
               // Counsellor navigation
               <>
                 <NavLink href="/counsellor" label="Dashboard" icon={Home} />
-                <NavLink href="/appointments" label="Appointments" icon={Calendar} />
                 <NavLink href="/forum" label="Forum" icon={MessageSquare} />
               </>
             ) : userRole === 'volunteer' ? (
@@ -108,7 +107,13 @@ export function Nav() {
           <div className="hidden md:flex items-center gap-2">
             {isAuthed ? (
               <>
-                <NavLink href="/dashboard" label="Dashboard" />
+                {userRole === 'counsellor' ? (
+                  <NavLink href="/counsellor" label="Dashboard" />
+                ) : userRole === 'volunteer' ? (
+                  <NavLink href="/volunteer" label="Dashboard" />
+                ) : (
+                  <NavLink href="/dashboard" label="Dashboard" />
+                )}
                 <NavLink href="/profile" label="Profile" icon={User} />
                 <Button
                   variant="outline"
@@ -153,7 +158,7 @@ export function Nav() {
             <div className="flex flex-col h-full">
               {/* Mobile Header */}
               <div className="flex items-center justify-between p-4 border-b border-border">
-                <div className="flex items-center gap-2 text-lg font-semibold text-primary">Flourish</div>
+                <div className="flex items-center gap-2 text-lg font-semibold text-primary">Zenly</div>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -172,7 +177,6 @@ export function Nav() {
                       <NavLink href="/" label="Home" icon={Home} mobile />
                       <NavLink href="/appointments" label="Counsellors" icon={Calendar} mobile />
                       <NavLink href="/forum" label="Community" icon={MessageSquare} mobile />
-                      <NavLink href="/volunteer" label="Volunteers" icon={Users} mobile />
                       <NavLink href="/wellness-hub" label="Wellness Hub" mobile />
                     </>
                   ) : userRole === 'student' ? (
@@ -187,7 +191,6 @@ export function Nav() {
                     // Counsellor mobile navigation
                     <>
                       <NavLink href="/counsellor" label="Dashboard" icon={Home} mobile />
-                      <NavLink href="/appointments" label="Appointments" icon={Calendar} mobile />
                       <NavLink href="/forum" label="Forum" icon={MessageSquare} mobile />
                     </>
                   ) : userRole === 'volunteer' ? (

@@ -28,7 +28,16 @@ export function HomeCTA() {
           </Link>
         </div>
         <div>
-          <Link className="underline underline-offset-4 text-sm text-accent hover:text-accent/80 transition-colors" href="/dashboard">
+          <Link
+            className="underline underline-offset-4 text-sm text-accent hover:text-accent/80 transition-colors"
+            href="/dashboard"
+            onClick={() => {
+              try {
+                localStorage.setItem("guest", "1")
+                window.dispatchEvent(new CustomEvent("authStateChanged"))
+              } catch {}
+            }}
+          >
             Continue without signup →
           </Link>
         </div>

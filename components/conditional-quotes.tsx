@@ -18,10 +18,10 @@ export function ConditionalQuotes() {
         <div className="quote-item quote-1" style={{ left: "8%", top: "10%" }}>
           It's okay to ask for help
         </div>
-        <div className="quote-item quote-2" style={{ left: "38%", top: "8%" }}>
+        <div className="quote-item quote-2" style={{ left: "38%", top: "6%" }}>
           You are not alone
         </div>
-        <div className="quote-item quote-3" style={{ left: "68%", top: "12%" }}>
+        <div className="quote-item quote-3" style={{ left: "68%", top: "6%" }}>
           Small steps count
         </div>
         <div className="quote-item quote-4" style={{ left: "88%", top: "10%" }}>
@@ -51,9 +51,7 @@ export function ConditionalQuotes() {
         <div className="quote-item quote-11" style={{ left: "8%", top: "65%" }}>
           You belong here
         </div>
-        <div className="quote-item quote-12" style={{ left: "28%", top: "68%" }}>
-          Growth takes time
-        </div>
+
         <div className="quote-item quote-13" style={{ left: "78%", top: "66%" }}>
           Be kind to yourself
         </div>
@@ -79,7 +77,7 @@ export function ConditionalQuotes() {
         <div className="quote-item quote-19" style={{ left: "18%", top: "15%" }}>
           Rest is productive
         </div>
-        <div className="quote-item quote-20" style={{ left: "55%", top: "18%" }}>
+        <div className="quote-item quote-20" style={{ left: "65%", top: "18%" }}>
           You're doing great
         </div>
         <div className="quote-item quote-21" style={{ left: "15%", top: "78%" }}>

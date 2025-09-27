@@ -6,20 +6,20 @@
 :root {
   /* Palette */
   --background: #f7f3ee; /* Cream */
-  --foreground: #6b8ca3; /* Enhanced blue-gray text */
+  --foreground: #2d3748; /* Much darker blue-gray text for better readability */
   --card: #e8f4f1; /* Soft mint green card background */
-  --card-foreground: #6b8ca3;
+  --card-foreground: #2d3748;
   --popover: #e8f4f1;
-  --popover-foreground: #6b8ca3;
+  --popover-foreground: #2d3748;
 
   --primary: #7db896; /* Enhanced vibrant green for CTAs */
   --primary-foreground: #ffffff;
 
   --secondary: #d4efea; /* Light teal secondary */
-  --secondary-foreground: #5a8a82;
+  --secondary-foreground: #2d4a44; /* Darker secondary text */
 
   --muted: #e1f0ed; /* Soft green-tinted muted */
-  --muted-foreground: #6b8ca3;
+  --muted-foreground: #374151; /* Much darker muted text */
 
   /* Enhanced accent colors */
   --accent: #4a9eff; /* Vibrant blue accent */
@@ -42,11 +42,11 @@
   --radius: 0.5rem;
 
   --sidebar: #f0f9f7; /* Light mint sidebar background */
-  --sidebar-foreground: #6b8ca3;
+  --sidebar-foreground: #2d3748; /* Darker sidebar text */
   --sidebar-primary: #7db896; /* Enhanced green */
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #d4efea; /* Light teal accent */
-  --sidebar-accent-foreground: #5a8a82;
+  --sidebar-accent-foreground: #2d4a44; /* Darker accent text */
   --sidebar-border: #c8e6de; /* Green-tinted border */
   --sidebar-ring: #7db896;
 }
@@ -286,7 +286,7 @@ body::before {
   
   /* Improve text contrast on the gradient background */
   main h1, main h2, main h3, main h4, main h5, main h6 {
-    @apply text-slate-800 font-semibold;
+    @apply text-slate-900 font-semibold;
   }
   
   .dark main h1, .dark main h2, .dark main h3, .dark main h4, .dark main h5, .dark main h6 {
@@ -294,7 +294,7 @@ body::before {
   }
   
   main p, main span, main div {
-    @apply text-slate-700;
+    @apply text-slate-800;
   }
   
   .dark main p, .dark main span, .dark main div {

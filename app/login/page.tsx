@@ -4,41 +4,69 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useAuth } from "../../contexts/AuthContext"
 
 type Role = "student" | "volunteer" | "counsellor"
 
 export default function LoginPage() {
   const router = useRouter()
+  const { isAuthed, login } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [role, setRole] = useState<Role>("student")
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // If already authenticated, optionally skip login
-    const role = localStorage.getItem("role")
-    if (role) {
-      // You can redirect if desired:
-      // router.replace("/dashboard")
+    // If already authenticated, redirect to dashboard
+    if (isAuthed) {
+      router.replace("/dashboard")
     }
-  }, [router])
+  }, [isAuthed, router])
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
+    
+    // For demo purposes, we'll create a simple authentication system
+    // In a real app, you'd validate against a backend
+    if (!email.includes("@")) {
+      setError("Please enter a valid email address.")
+      return
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.")
+      return
+    }
+    
     try {
+      // Check if user exists in localStorage (for demo)
       const raw = localStorage.getItem("auth_user")
-      if (!raw) {
-        setError("No account found. Please sign up first.")
-        return
+      if (raw) {
+        const user = JSON.parse(raw) as { email: string; password: string; name: string; role: Role }
+        if (user.email === email.trim() && user.password === password) {
+          // Use existing account - use the stored role instead of form role
+          const profile = { 
+            email: email.trim(), 
+            password, 
+            name: user.name || email.split("@")[0], 
+            role: user.role // Use stored role
+          }
+          localStorage.setItem("auth_user", JSON.stringify(profile))
+          login(user.role, user.name || email.split("@")[0], user.email)
+          router.push("/dashboard")
+          return
+        }
       }
-      const user = JSON.parse(raw) as { email: string; password: string; name: string; role: Role }
-      if (user.email !== email.trim() || user.password !== password) {
-        setError("Invalid email or password.")
-        return
+      
+      // Create new session with provided credentials (for demo)
+      const profile = { 
+        email: email.trim(), 
+        password, 
+        name: email.split("@")[0], 
+        role 
       }
-      // set auth compatibility keys
-      localStorage.setItem("role", user.role)
-      localStorage.setItem("name", user.name || "")
+      localStorage.setItem("auth_user", JSON.stringify(profile))
+      login(role, profile.name, profile.email)
       router.push("/dashboard")
     } catch {
       setError("Something went wrong. Please try again.")
@@ -80,6 +108,25 @@ export default function LoginPage() {
             required
             minLength={6}
           />
+        </fieldset>
+
+        <fieldset className="space-y-2">
+          <legend className="text-sm">I am a</legend>
+          <div className="flex gap-4">
+            {(["student", "volunteer", "counsellor"] as Role[]).map((r) => (
+              <label key={r} className="flex items-center gap-2 cursor-pointer">
+                <input 
+                  type="radio" 
+                  name="role" 
+                  value={r} 
+                  checked={role === r} 
+                  onChange={() => setRole(r)}
+                  className="text-primary focus:ring-primary" 
+                />
+                <span className="capitalize text-sm">{r}</span>
+              </label>
+            ))}
+          </div>
         </fieldset>
 
         <div className="flex items-center gap-3">

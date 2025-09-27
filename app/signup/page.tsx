@@ -3,11 +3,13 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useAuth } from "../../contexts/AuthContext"
 
 type Role = "student" | "volunteer" | "counsellor"
 
 export default function SignupPage() {
   const router = useRouter()
+  const { isAuthed, login } = useAuth()
   const [role, setRole] = useState<Role>("student")
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -15,9 +17,11 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const savedName = localStorage.getItem("name") || ""
-    if (savedName) setName(savedName)
-  }, [])
+    // If already authenticated, redirect to dashboard
+    if (isAuthed) {
+      router.replace("/dashboard")
+    }
+  }, [isAuthed, router])
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -32,8 +36,7 @@ export default function SignupPage() {
     }
     const profile = { email: email.trim(), password, name: name.trim(), role }
     localStorage.setItem("auth_user", JSON.stringify(profile))
-    localStorage.setItem("role", role)
-    localStorage.setItem("name", profile.name)
+    login(role, profile.name, profile.email)
     router.push("/dashboard")
   }
 
@@ -82,12 +85,19 @@ export default function SignupPage() {
         </fieldset>
 
         <fieldset className="space-y-2">
-          <legend className="text-sm">Role</legend>
-          <div className="flex flex-col gap-2">
+          <legend className="text-sm">I am a</legend>
+          <div className="flex gap-4">
             {(["student", "volunteer", "counsellor"] as Role[]).map((r) => (
-              <label key={r} className="flex items-center gap-2">
-                <input type="radio" name="role" value={r} checked={role === r} onChange={() => setRole(r)} />
-                <span className="capitalize">{r}</span>
+              <label key={r} className="flex items-center gap-2 cursor-pointer">
+                <input 
+                  type="radio" 
+                  name="role" 
+                  value={r} 
+                  checked={role === r} 
+                  onChange={() => setRole(r)}
+                  className="text-primary focus:ring-primary" 
+                />
+                <span className="capitalize text-sm">{r}</span>
               </label>
             ))}
           </div>

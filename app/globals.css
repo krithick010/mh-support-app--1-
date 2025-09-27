@@ -127,61 +127,142 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Soothing gradient background */
+/* Clean, professional gradient background with calming colors */
 body {
-  background: linear-gradient(to right, #e6f3ff, #e8f5e8);
+  background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 25%, #f3e8ff 50%, #fef3f2 75%, #f0f9ff 100%);
+  background-size: 400% 400%;
+  animation: gentleGradientShift 20s ease-in-out infinite;
   min-height: 100vh;
+  position: relative;
+}
+
+/* Subtle animated gradient for a living, breathing feel */
+@keyframes gentleGradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Semi-transparent overlay for better text contrast */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .dark body {
-  background: linear-gradient(to right, #0a1a2e, #0f2027);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%);
+  background-size: 400% 400%;
+  animation: gentleGradientShift 20s ease-in-out infinite;
 }
 
-/* Motivational quotes animation */
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0; transform: translateY(10px); }
-  50% { opacity: 0.4; transform: translateY(0); }
+.dark body::before {
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.motivational-quote {
-  position: fixed;
+/* Motivational quotes organized grid with animations */
+@keyframes quoteFadeInOut {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.9) translateY(10px); 
+  }
+  15%, 85% { 
+    opacity: 0.6; 
+    transform: scale(1) translateY(0); 
+  }
+  100% { 
+    opacity: 0; 
+    transform: scale(0.9) translateY(-10px); 
+  }
+}
+
+.quotes-grid {
+  position: relative;
+}
+
+.quote-item {
+  position: absolute;
   font-style: italic;
   font-weight: 300;
   font-size: 0.875rem;
-  color: #6b8ca3;
+  color: #6b7280;
+  text-align: center;
+  max-width: 120px;
+  line-height: 1.3;
   opacity: 0;
-  animation: fadeInOut 8s infinite;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  z-index: 1;
+  animation: quoteFadeInOut 8s infinite;
   pointer-events: none;
   user-select: none;
+  transform-origin: center;
 }
 
-.dark .motivational-quote {
-  color: #8fa8b5;
+.dark .quote-item {
+  color: #9ca3af;
 }
 
-.quote-left {
-  left: 1rem;
-  top: 20%;
+/* Staggered animation delays for wave effect */
+.quote-1 { animation-delay: 0s; }
+.quote-2 { animation-delay: 0.5s; }
+.quote-3 { animation-delay: 1s; }
+.quote-4 { animation-delay: 1.5s; }
+.quote-5 { animation-delay: 2s; }
+.quote-6 { animation-delay: 2.5s; }
+.quote-7 { animation-delay: 3s; }
+.quote-8 { animation-delay: 3.5s; }
+.quote-9 { animation-delay: 4s; }
+.quote-10 { animation-delay: 4.5s; }
+.quote-11 { animation-delay: 5s; }
+.quote-12 { animation-delay: 5.5s; }
+.quote-13 { animation-delay: 6s; }
+.quote-14 { animation-delay: 6.5s; }
+.quote-15 { animation-delay: 7s; }
+.quote-16 { animation-delay: 7.5s; }
+.quote-17 { animation-delay: 8s; }
+.quote-18 { animation-delay: 8.5s; }
+.quote-19 { animation-delay: 1.25s; }
+.quote-20 { animation-delay: 2.75s; }
+.quote-21 { animation-delay: 4.25s; }
+.quote-22 { animation-delay: 6.75s; }
+
+/* Responsive adjustments for organized grid */
+@media (max-width: 1024px) {
+  .quote-item {
+    font-size: 0.8rem;
+    max-width: 100px;
+  }
 }
 
-.quote-right {
-  right: 1rem;
-  top: 60%;
+@media (max-width: 768px) {
+  .quote-item {
+    font-size: 0.75rem;
+    max-width: 80px;
+  }
+  
+  /* Hide some quotes to maintain clean look on tablets */
+  .quote-19, .quote-20, .quote-21, .quote-22 {
+    display: none;
+  }
 }
 
-.quote-left-2 {
-  left: 1rem;
-  top: 70%;
-  animation-delay: 4s;
-}
-
-.quote-right-2 {
-  right: 1rem;
-  top: 30%;
-  animation-delay: 6s;
+@media (max-width: 640px) {
+  /* Keep only corner and edge quotes on mobile */
+  .quote-item:not(.quote-1):not(.quote-4):not(.quote-9):not(.quote-10):not(.quote-15):not(.quote-18) {
+    display: none;
+  }
+  
+  .quote-item {
+    font-size: 0.7rem;
+    max-width: 60px;
+  }
 }
 
 @layer base {
@@ -189,7 +270,35 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+  }
+}
+
+/* Enhanced content styling for better readability */
+@layer components {
+  .content-card {
+    @apply bg-white/70 backdrop-blur-sm border border-white/20 rounded-xl shadow-lg;
+  }
+  
+  .dark .content-card {
+    @apply bg-slate-900/70 border-slate-700/30;
+  }
+  
+  /* Improve text contrast on the gradient background */
+  main h1, main h2, main h3, main h4, main h5, main h6 {
+    @apply text-slate-800 font-semibold;
+  }
+  
+  .dark main h1, .dark main h2, .dark main h3, .dark main h4, .dark main h5, .dark main h6 {
+    @apply text-slate-100;
+  }
+  
+  main p, main span, main div {
+    @apply text-slate-700;
+  }
+  
+  .dark main p, .dark main span, .dark main div {
+    @apply text-slate-200;
   }
 }
 

@@ -1,9 +1,13 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
 
 type JournalEntry = { id: string; text: string; createdAt: string }
 type MedSession = { id: string; dateISO: string; seconds: number }
+type MoodEntry = { id: string; mood: string; note: string; date: string }
+type Affirmation = { id: string; text: string; isFavorite: boolean }
 
 function todayKey() {
   const d = new Date()
@@ -30,6 +34,16 @@ export default function WellnessHubPage() {
     five: false,
     stretch: false,
   })
+  
+  // Mood Tracker
+  const [currentMood, setCurrentMood] = useState("")
+  const [moodNote, setMoodNote] = useState("")
+  const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([])
+  
+  // Daily Affirmations
+  const [currentAffirmation, setCurrentAffirmation] = useState("")
+  const [savedAffirmations, setSavedAffirmations] = useState<Affirmation[]>([])
+  const [showAffirmation, setShowAffirmation] = useState(false)
 
   // Load persisted data
   useEffect(() => {
@@ -45,6 +59,14 @@ export default function WellnessHubPage() {
       const hk = "habits_" + todayKey()
       const hv = JSON.parse(localStorage.getItem(hk) || "{}") as Partial<typeof habits>
       setHabits({ gratitude: Boolean(hv.gratitude), five: Boolean(hv.five), stretch: Boolean(hv.stretch) })
+    } catch {}
+    try {
+      const me = JSON.parse(localStorage.getItem("mood_entries") || "[]") as MoodEntry[]
+      setMoodEntries(me)
+    } catch {}
+    try {
+      const sa = JSON.parse(localStorage.getItem("saved_affirmations") || "[]") as Affirmation[]
+      setSavedAffirmations(sa)
     } catch {}
   }, [])
 
@@ -64,6 +86,16 @@ export default function WellnessHubPage() {
     localStorage.setItem("habits_" + todayKey(), JSON.stringify(next))
   }, [])
 
+  const saveMoodEntries = useCallback((next: MoodEntry[]) => {
+    setMoodEntries(next)
+    localStorage.setItem("mood_entries", JSON.stringify(next))
+  }, [])
+
+  const saveAffirmations = useCallback((next: Affirmation[]) => {
+    setSavedAffirmations(next)
+    localStorage.setItem("saved_affirmations", JSON.stringify(next))
+  }, [])
+
   // Journaling actions
   function addEntry() {
     if (!draft.trim()) return
@@ -79,6 +111,73 @@ export default function WellnessHubPage() {
   function deleteEntry(id: string) {
     const next = entries.filter((e) => e.id !== id)
     saveEntries(next)
+  }
+
+  // Mood tracking functions
+  function saveMood() {
+    if (!currentMood) return
+    const moodEntry: MoodEntry = {
+      id: crypto.randomUUID(),
+      mood: currentMood,
+      note: moodNote.trim(),
+      date: todayKey(),
+    }
+    const next = [moodEntry, ...moodEntries.filter(e => e.date !== todayKey())] // Replace today's entry
+    saveMoodEntries(next)
+    setMoodNote("")
+  }
+
+  function deleteMoodEntry(id: string) {
+    const next = moodEntries.filter((e) => e.id !== id)
+    saveMoodEntries(next)
+  }
+
+  // Affirmation functions
+  const dailyAffirmations = [
+    "I am worthy of love and respect.",
+    "I choose to be kind to myself today.",
+    "My feelings are valid and important.",
+    "I am capable of handling whatever comes my way.",
+    "I deserve peace and happiness.",
+    "I am growing stronger every day.",
+    "I trust myself to make good decisions.",
+    "I am enough, just as I am.",
+    "My past does not define my future.",
+    "I choose joy and gratitude today."
+  ]
+
+  function getRandomAffirmation() {
+    const available = dailyAffirmations.filter(a => !savedAffirmations.some(sa => sa.text === a))
+    if (available.length === 0) return dailyAffirmations[Math.floor(Math.random() * dailyAffirmations.length)]
+    return available[Math.floor(Math.random() * available.length)]
+  }
+
+  function showNewAffirmation() {
+    setCurrentAffirmation(getRandomAffirmation())
+    setShowAffirmation(true)
+  }
+
+  function saveCurrentAffirmation() {
+    if (!currentAffirmation) return
+    const affirmation: Affirmation = {
+      id: crypto.randomUUID(),
+      text: currentAffirmation,
+      isFavorite: true,
+    }
+    const next = [...savedAffirmations, affirmation]
+    saveAffirmations(next)
+  }
+
+  function toggleAffirmationFavorite(id: string) {
+    const next = savedAffirmations.map(a => 
+      a.id === id ? { ...a, isFavorite: !a.isFavorite } : a
+    )
+    saveAffirmations(next)
+  }
+
+  function deleteAffirmation(id: string) {
+    const next = savedAffirmations.filter(a => a.id !== id)
+    saveAffirmations(next)
   }
 
   // Breathing cycle
@@ -158,11 +257,16 @@ export default function WellnessHubPage() {
   }, [medSessions])
 
   return (
-    <section className="space-y-6">
-      <h1 className="font-sans text-2xl">Wellness Hub — {'"Little practices, big impact."'} </h1>
+    <section className="space-y-4">
+      {/* friendly, encouraging header */}
+      <h1 className="font-sans text-2xl text-accent text-balance">Wellness Hub — "Little practices, big impact."</h1>
+      <p className="text-sm text-muted-foreground">
+        Simple, gentle tools for your wellbeing. Take what helps, leave what doesn't.
+      </p>
 
-      {/* Journaling */}
-      <div className="space-y-3 rounded-sm border border-border bg-card p-4">
+      <div className="pt-2 space-y-4">
+        {/* Journaling */}
+        <div className="space-y-3 rounded-sm border border-border bg-card p-4">
         <p className="font-sans">Journaling</p>
         <p className="text-sm text-muted-foreground">
           Write a few lines to clear your mind. {'"Let it out, gently."'}{" "}
@@ -204,8 +308,8 @@ export default function WellnessHubPage() {
         )}
       </div>
 
-      {/* Box Breathing Coach (4-4-4-4) */}
-      <div className="space-y-2 rounded-sm border border-border bg-card p-4">
+        {/* Box Breathing Coach (4-4-4-4) */}
+        <div className="space-y-2 rounded-sm border border-border bg-card p-4">
         <p className="font-sans">Box Breathing</p>
         <p className="text-sm">Inhale (4), hold (4), exhale (4), rest (4). Follow the phase and the timer.</p>
         <div className="flex items-center justify-between">
@@ -221,8 +325,8 @@ export default function WellnessHubPage() {
         </div>
       </div>
 
-      {/* Meditation Tracker */}
-      <div className="space-y-2 rounded-sm border border-border bg-card p-4">
+        {/* Meditation Tracker */}
+        <div className="space-y-2 rounded-sm border border-border bg-card p-4">
         <p className="font-sans">Meditation</p>
         <p className="text-sm">Press start, sit quietly, and stop when done. We’ll track your sessions.</p>
         <div className="flex items-center justify-between">
@@ -253,8 +357,8 @@ export default function WellnessHubPage() {
         )}
       </div>
 
-      {/* Daily Techniques Checklist */}
-      <div className="space-y-2 rounded-sm border border-border bg-card p-4">
+        {/* Daily Techniques Checklist */}
+        <div className="space-y-2 rounded-sm border border-border bg-card p-4">
         <p className="font-sans">Today’s gentle practices</p>
         <p className="text-sm text-muted-foreground">Mark what you tried today. Progress, not perfection.</p>
         <div className="flex flex-col gap-2">
@@ -284,6 +388,121 @@ export default function WellnessHubPage() {
           </label>
         </div>
         <p className="text-xs text-muted-foreground">Saved for {todayKey()}.</p>
+        </div>
+      </div>
+
+      {/* Mood Tracker */}
+      <div className="bg-white rounded-lg shadow-sm border p-6">
+        <h2 className="text-xl font-semibold mb-4">Mood Tracker</h2>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">How are you feeling today?</label>
+            <div className="flex gap-2 flex-wrap">
+              {["😊 Happy", "😌 Calm", "😔 Sad", "😤 Angry", "😰 Anxious", "😴 Tired", "🤔 Confused", "❤️ Loved"].map((mood) => (
+                <button
+                  key={mood}
+                  onClick={() => setCurrentMood(mood)}
+                  className={`px-3 py-2 rounded-md text-sm border transition-colors ${
+                    currentMood === mood
+                      ? "bg-blue-100 border-blue-300 text-blue-700"
+                      : "bg-gray-50 border-gray-200 hover:bg-gray-100"
+                  }`}
+                >
+                  {mood}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Notes (optional)</label>
+            <Textarea
+              value={moodNote}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMoodNote(e.target.value)}
+              placeholder="What's on your mind?"
+              className="min-h-[80px]"
+            />
+          </div>
+          <Button onClick={saveMood} disabled={!currentMood} className="w-full">
+            Save Mood Entry
+          </Button>
+          {moodEntries.length > 0 && (
+            <div className="mt-4">
+              <h3 className="font-medium mb-2">Recent Entries</h3>
+              <div className="space-y-2">
+                {moodEntries.slice(0, 3).map((entry) => (
+                  <div key={entry.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                    <div>
+                      <span className="font-medium">{entry.mood}</span>
+                      {entry.note && <p className="text-sm text-gray-600 mt-1">{entry.note}</p>}
+                      <p className="text-xs text-gray-500">{new Date(entry.date).toLocaleDateString()}</p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => deleteMoodEntry(entry.id)}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Daily Affirmations */}
+      <div className="bg-white rounded-lg shadow-sm border p-6">
+        <h2 className="text-xl font-semibold mb-4">Daily Affirmations</h2>
+        <div className="space-y-4">
+          {showAffirmation && currentAffirmation && (
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-lg font-medium text-center mb-4">"{currentAffirmation}"</p>
+              <div className="flex gap-2 justify-center">
+                <Button onClick={saveCurrentAffirmation} variant="outline">
+                  Save to Favorites
+                </Button>
+                <Button onClick={() => setShowAffirmation(false)} variant="outline">
+                  Close
+                </Button>
+              </div>
+            </div>
+          )}
+          <Button onClick={showNewAffirmation} className="w-full">
+            Get New Affirmation
+          </Button>
+          {savedAffirmations.length > 0 && (
+            <div className="mt-4">
+              <h3 className="font-medium mb-2">Your Favorite Affirmations</h3>
+              <div className="space-y-2">
+                {savedAffirmations.filter(a => a.isFavorite).map((affirmation) => (
+                  <div key={affirmation.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                    <p className="flex-1">"{affirmation.text}"</p>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleAffirmationFavorite(affirmation.id)}
+                        className="text-yellow-600 hover:text-yellow-700"
+                      >
+                        {affirmation.isFavorite ? "★" : "☆"}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => deleteAffirmation(affirmation.id)}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   )

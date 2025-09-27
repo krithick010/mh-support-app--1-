@@ -32,6 +32,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${plexMono.variable} antialiased`}>
       <body className="font-mono bg-background text-foreground">
+        {/* Motivational quotes overlay */}
+        <div className="motivational-quote quote-left">It's okay to ask for help.</div>
+        <div className="motivational-quote quote-right">Small steps count.</div>
+        <div className="motivational-quote quote-left-2">You are not alone.</div>
+        <div className="motivational-quote quote-right-2">Breathe. You are doing your best.</div>
+        
         <Suspense fallback={<div>Loading...</div>}>
           <header className="border-b border-border bg-background">
             <div className="mx-auto max-w-prose px-4 py-4">

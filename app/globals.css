@@ -127,6 +127,63 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Soothing gradient background */
+body {
+  background: linear-gradient(to right, #e6f3ff, #e8f5e8);
+  min-height: 100vh;
+}
+
+.dark body {
+  background: linear-gradient(to right, #0a1a2e, #0f2027);
+}
+
+/* Motivational quotes animation */
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; transform: translateY(10px); }
+  50% { opacity: 0.4; transform: translateY(0); }
+}
+
+.motivational-quote {
+  position: fixed;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: #6b8ca3;
+  opacity: 0;
+  animation: fadeInOut 8s infinite;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dark .motivational-quote {
+  color: #8fa8b5;
+}
+
+.quote-left {
+  left: 1rem;
+  top: 20%;
+}
+
+.quote-right {
+  right: 1rem;
+  top: 60%;
+}
+
+.quote-left-2 {
+  left: 1rem;
+  top: 70%;
+  animation-delay: 4s;
+}
+
+.quote-right-2 {
+  right: 1rem;
+  top: 30%;
+  animation-delay: 6s;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

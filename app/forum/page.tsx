@@ -53,6 +53,20 @@ export default function ForumPage() {
     save(next)
   }
 
+  function deletePost(id: string) {
+    const next = posts.filter((p) => p.id !== id)
+    save(next)
+  }
+
+  function deleteReply(postId: string, replyId: string) {
+    const next = posts.map((p) =>
+      p.id === postId
+        ? { ...p, replies: (p.replies || []).filter((r) => r.id !== replyId) }
+        : p,
+    )
+    save(next)
+  }
+
   function banUser(_authorAnon: string) {
     // Placeholder only
     alert("User banned (placeholder).")
@@ -90,6 +104,8 @@ export default function ForumPage() {
               canModerate={role === "volunteer"}
               onReply={(text) => reply(p.id, text)}
               onHide={(v) => hide(p.id, v)}
+              onDelete={() => deletePost(p.id)}
+              onDeleteReply={(replyId) => deleteReply(p.id, replyId)}
               onBan={() => banUser(p.authorAnon)}
             />
           ))
@@ -104,12 +120,16 @@ function Thread({
   canModerate,
   onReply,
   onHide,
+  onDelete,
+  onDeleteReply,
   onBan,
 }: {
   post: Post
   canModerate: boolean
   onReply: (text: string) => void
   onHide: (v: boolean) => void
+  onDelete: () => void
+  onDeleteReply: (replyId: string) => void
   onBan: () => void
 }) {
   const [expanded, setExpanded] = useState(false)
@@ -153,6 +173,15 @@ function Thread({
             >
               Remove
             </button>
+            <button
+              onClick={() => {
+                if (confirm("Delete this thread? This cannot be undone.")) onDelete()
+              }}
+              className="underline underline-offset-4 text-red-600"
+              style={{ background: "transparent" }}
+            >
+              Delete thread
+            </button>
             <button onClick={onBan} className="underline underline-offset-4">
               Ban user
             </button>
@@ -173,9 +202,19 @@ function Thread({
               <p className="text-sm text-muted-foreground">No replies yet.</p>
             ) : (
               (post.replies || []).map((r) => (
-                <p key={r.id} className="text-sm">
-                  {r.content}
-                </p>
+                <div key={r.id} className="text-sm flex items-start justify-between gap-2">
+                  <p className="flex-1">{r.content}</p>
+                  {canModerate && (
+                    <button
+                      onClick={() => {
+                        if (confirm("Delete this reply? This cannot be undone.")) onDeleteReply(r.id)
+                      }}
+                      className="underline underline-offset-4 text-red-600"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
               ))
             )}
           </div>

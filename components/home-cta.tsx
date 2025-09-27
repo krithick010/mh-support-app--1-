@@ -12,17 +12,22 @@ export function HomeCTA() {
 
   if (!isAuthed) {
     return (
-      <div className="space-y-4">
-        <blockquote className="text-sm italic text-muted-foreground">
-          "Small steps count. Start where you are."
-        </blockquote>
-        <div className="flex items-center gap-3">
-          <Link className="rounded-sm bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm" href="/login">
+      <div className="space-y-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center gap-3">
+          <Link
+            className="rounded-sm bg-primary px-5 py-2.5 text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
+            href="/login"
+          >
             Login ✨
           </Link>
-          <Link className="rounded-sm border border-accent/30 bg-card px-4 py-2 hover:bg-accent/5 transition-colors" href="/signup">
+          <Link
+            className="rounded-sm border border-border bg-card px-5 py-2.5 hover:bg-accent/5 transition-colors"
+            href="/signup"
+          >
             Signup
           </Link>
+        </div>
+        <div>
           <Link className="underline underline-offset-4 text-sm text-accent hover:text-accent/80 transition-colors" href="/dashboard">
             Continue without signup →
           </Link>

@@ -82,16 +82,19 @@ function BreathingGuide() {
 
 function Helplines() {
   const lines = [
-    { label: "Emergency Services (US/Canada)", number: "911" },
-    { label: "988 Suicide & Crisis Lifeline (US)", number: "988" },
-    { label: "Samaritans (UK & ROI)", number: "+44 116 123" },
-    { label: "Lifeline (AU)", number: "13 11 14" },
+    { label: "Emergency Services (India)", number: "112" },
+    { label: "Kiran Mental Health Helpline", number: "18005990019" },
+    { label: "AASRA (24x7)", number: "+91 9820466726" },
+    { label: "iCall (TISS) Counselling", number: "+91 9152987821" },
+    { label: "Childline", number: "1098" },
+    { label: "Women Helpline", number: "181" },
+    { label: "Health Helpline (many states)", number: "104" },
   ]
   return (
     <Card className="p-4 rounded-lg bg-card">
       <h4 className="text-sm font-medium">{"Helplines"}</h4>
       <p className="text-xs text-muted-foreground mt-1">
-        {"If you’re in immediate danger, call your local emergency number."}
+  {"If you’re in immediate danger, call 112 (India). Availability may vary by state; verify local listings."}
       </p>
       <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
         {lines.map((l) => (

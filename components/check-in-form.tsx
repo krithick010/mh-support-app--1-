@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react"
 import { COMPLAINTS, computeMHRS, tierSuggestion } from "../lib/mhrs"
 import { SuggestionCard } from "./suggestion-card"
 import Link from "next/link"
+import { SOSPanel } from "./sos-panel"
 
 type CheckInResult = {
   ts: number
@@ -185,11 +186,16 @@ export function CheckInForm() {
         </div>
       </fieldset>
 
-      <div className="flex items-center gap-3">
-        <button type="submit" className="rounded-md bg-primary px-4 py-2 text-primary-foreground">
-          Get suggestion →
-        </button>
-        <span className="text-sm text-muted-foreground">You’re in control. You can choose any option later.</span>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <button type="submit" className="rounded-md bg-primary px-4 py-2 text-primary-foreground">
+            Get suggestion →
+          </button>
+          <span className="text-sm text-muted-foreground">You’re in control. You can choose any option later.</span>
+        </div>
+        <div>
+          <SOSPanel />
+        </div>
       </div>
     </form>
   )

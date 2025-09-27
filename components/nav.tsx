@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Button } from "./ui/button"
-import { Heart, Menu, X, User, LogOut, Calendar, MessageSquare, Home, Users, Bot, Sparkles } from "lucide-react"
+import { Menu, X, User, LogOut, Calendar, MessageSquare, Home, Users, Bot, Sparkles } from "lucide-react"
 import { useAuth } from "../contexts/AuthContext"
 
 export function Nav() {
@@ -55,8 +55,7 @@ export function Nav() {
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold text-primary">
-            <Heart className="h-6 w-6 fill-current" />
-            <span className="hidden sm:block">Campus Wellbeing</span>
+            <span className="hidden sm:block">Flourish</span>
             <span className="sm:hidden">CW</span>
           </Link>
 
@@ -69,7 +68,7 @@ export function Nav() {
                 <NavLink href="/appointments" label="Counsellors" icon={Calendar} />
                 <NavLink href="/forum" label="Community" icon={MessageSquare} />
                 <NavLink href="/volunteer" label="Volunteers" icon={Users} />
-                <NavLink href="/wellness-hub" label="Resources" />
+                <NavLink href="/wellness-hub" label="Wellness Hub" />
               </>
             ) : userRole === 'student' ? (
               // Student navigation
@@ -91,7 +90,7 @@ export function Nav() {
               <>
                 <NavLink href="/volunteer" label="Dashboard" icon={Home} />
                 <NavLink href="/forum" label="Forum" icon={MessageSquare} />
-                <NavLink href="/wellness-hub" label="Resources" icon={Sparkles} />
+                <NavLink href="/wellness-hub" label="Wellness Hub" icon={Sparkles} />
               </>
             ) : (
               // Default navigation for other roles
@@ -100,7 +99,7 @@ export function Nav() {
                 <NavLink href="/appointments" label="Counsellors" icon={Calendar} />
                 <NavLink href="/forum" label="Community" icon={MessageSquare} />
                 <NavLink href="/volunteer" label="Volunteers" icon={Users} />
-                <NavLink href="/wellness-hub" label="Resources" />
+                <NavLink href="/wellness-hub" label="Wellness Hub" />
               </>
             )}
           </div>
@@ -154,10 +153,7 @@ export function Nav() {
             <div className="flex flex-col h-full">
               {/* Mobile Header */}
               <div className="flex items-center justify-between p-4 border-b border-border">
-                <div className="flex items-center gap-2 text-lg font-semibold text-primary">
-                  <Heart className="h-5 w-5 fill-current" />
-                  Campus Wellbeing
-                </div>
+                <div className="flex items-center gap-2 text-lg font-semibold text-primary">Flourish</div>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -177,7 +173,7 @@ export function Nav() {
                       <NavLink href="/appointments" label="Counsellors" icon={Calendar} mobile />
                       <NavLink href="/forum" label="Community" icon={MessageSquare} mobile />
                       <NavLink href="/volunteer" label="Volunteers" icon={Users} mobile />
-                      <NavLink href="/wellness-hub" label="Resources" mobile />
+                      <NavLink href="/wellness-hub" label="Wellness Hub" mobile />
                     </>
                   ) : userRole === 'student' ? (
                     // Student mobile navigation
@@ -199,7 +195,7 @@ export function Nav() {
                     <>
                       <NavLink href="/volunteer" label="Dashboard" icon={Home} mobile />
                       <NavLink href="/forum" label="Forum" icon={MessageSquare} mobile />
-                      <NavLink href="/wellness-hub" label="Resources" icon={Sparkles} mobile />
+                      <NavLink href="/wellness-hub" label="Wellness Hub" icon={Sparkles} mobile />
                     </>
                   ) : (
                     // Default mobile navigation for other roles
@@ -208,7 +204,7 @@ export function Nav() {
                       <NavLink href="/appointments" label="Counsellors" icon={Calendar} mobile />
                       <NavLink href="/forum" label="Community" icon={MessageSquare} mobile />
                       <NavLink href="/volunteer" label="Volunteers" icon={Users} mobile />
-                      <NavLink href="/wellness-hub" label="Resources" mobile />
+                      <NavLink href="/wellness-hub" label="Wellness Hub" mobile />
                     </>
                   )}
                   

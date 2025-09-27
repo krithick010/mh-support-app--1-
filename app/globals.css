@@ -6,84 +6,84 @@
 :root {
   /* Palette */
   --background: #f7f3ee; /* Cream */
-  --foreground: #7c96a8; /* Dusty Blue as text accent / default text */
-  --card: #ece3d7; /* Beige surface */
-  --card-foreground: #7c96a8;
-  --popover: #ece3d7;
-  --popover-foreground: #7c96a8;
+  --foreground: #6b8ca3; /* Enhanced blue-gray text */
+  --card: #e8f4f1; /* Soft mint green card background */
+  --card-foreground: #6b8ca3;
+  --popover: #e8f4f1;
+  --popover-foreground: #6b8ca3;
 
-  --primary: #9aae99; /* Faded Green for calm CTA */
-  --primary-foreground: #f7f3ee;
+  --primary: #7db896; /* Enhanced vibrant green for CTAs */
+  --primary-foreground: #ffffff;
 
-  --secondary: #ece3d7;
-  --secondary-foreground: #7c96a8;
+  --secondary: #d4efea; /* Light teal secondary */
+  --secondary-foreground: #5a8a82;
 
-  --muted: #ece3d7;
-  --muted-foreground: #7c96a8;
+  --muted: #e1f0ed; /* Soft green-tinted muted */
+  --muted-foreground: #6b8ca3;
 
-  /* gently warm accent for positivity while keeping contrast */
-  --accent: #6ea6a1; /* Soft teal for uplifting accents */
-  --accent-foreground: #f7f3ee;
+  /* Enhanced accent colors */
+  --accent: #4a9eff; /* Vibrant blue accent */
+  --accent-foreground: #ffffff;
 
   --destructive: #c9745a; /* Terracotta for urgent */
   --destructive-foreground: #f7f3ee;
 
-  --border: #ece3d7;
-  --input: #ece3d7;
-  --ring: #9aae99;
+  --border: #c8e6de; /* Green-tinted borders */
+  --input: #e8f4f1; /* Light mint input background */
+  --ring: #7db896; /* Green focus ring */
 
-  /* Unused chart/sidebar keep neutrals aligned */
-  --chart-1: #9aae99;
-  --chart-2: #7c96a8;
-  --chart-3: #ece3d7;
-  --chart-4: #f7f3ee;
-  --chart-5: #c9745a;
+  /* Enhanced chart colors with green/blue theme */
+  --chart-1: #7db896; /* Vibrant green */
+  --chart-2: #4a9eff; /* Vibrant blue */
+  --chart-3: #6ec5b8; /* Teal */
+  --chart-4: #85c98a; /* Light green */
+  --chart-5: #5b9bd5; /* Medium blue */
 
   --radius: 0.5rem;
 
-  --sidebar: #f7f3ee;
-  --sidebar-foreground: #7c96a8;
-  --sidebar-primary: #9aae99;
-  --sidebar-primary-foreground: #f7f3ee;
-  --sidebar-accent: #ece3d7;
-  --sidebar-accent-foreground: #7c96a8;
-  --sidebar-border: #ece3d7;
-  --sidebar-ring: #9aae99;
+  --sidebar: #f0f9f7; /* Light mint sidebar background */
+  --sidebar-foreground: #6b8ca3;
+  --sidebar-primary: #7db896; /* Enhanced green */
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #d4efea; /* Light teal accent */
+  --sidebar-accent-foreground: #5a8a82;
+  --sidebar-border: #c8e6de; /* Green-tinted border */
+  --sidebar-ring: #7db896;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #0a1a15; /* Dark green-tinted background */
+  --foreground: #b8d4e0; /* Light blue-gray text */
+  --card: #0f2620; /* Dark mint card background */
+  --card-foreground: #b8d4e0;
+  --popover: #0f2620;
+  --popover-foreground: #b8d4e0;
+  --primary: #6ba883; /* Muted green for dark mode */
+  --primary-foreground: #ffffff;
+  --secondary: #1a3d36; /* Dark teal secondary */
+  --secondary-foreground: #a5c9c1;
+  --muted: #1a332b; /* Dark green-tinted muted */
+  --muted-foreground: #8fa8b5;
+  --accent: #3d8bdb; /* Darker blue accent */
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --border: #2a4d42; /* Dark green-tinted border */
+  --input: #0f2620; /* Dark mint input */
+  --ring: #6ba883; /* Green focus ring */
+  --chart-1: #6ba883; /* Dark green */
+  --chart-2: #3d8bdb; /* Dark blue */
+  --chart-3: #4a9c8e; /* Dark teal */
+  --chart-4: #7fb584; /* Medium green */
+  --chart-5: #5082c4; /* Medium blue */
+  --sidebar: #0d1f18; /* Dark green sidebar */
+  --sidebar-foreground: #b8d4e0;
+  --sidebar-primary: #6ba883;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a3d36;
+  --sidebar-accent-foreground: #a5c9c1;
+  --sidebar-border: #2a4d42;
+  --sidebar-ring: #6ba883;
 }
 
 @theme inline {
@@ -134,4 +134,40 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom accent utilities for enhanced green/blue theme */
+.text-success {
+  color: var(--primary);
+}
+
+.text-info {
+  color: var(--accent);
+}
+
+.bg-success-soft {
+  background-color: rgba(125, 184, 150, 0.1);
+}
+
+.bg-info-soft {
+  background-color: rgba(74, 158, 255, 0.1);
+}
+
+.border-success {
+  border-color: var(--primary);
+}
+
+.border-info {
+  border-color: var(--accent);
+}
+
+/* Enhanced focus states with green/blue theme */
+.focus-success:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.focus-info:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
